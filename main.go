@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 )
 
 // Tempoarily building movie list manually will come back to this later and build a database and connect to IMDB API to get movie list and details, tags and reviews.
@@ -14,7 +15,7 @@ type Movie struct {
 }
 
 func main() {
-	fmt.Println("Hello, World")
+	fmt.Println("Loading GoIMDB...")
 
 	// Create a handler function to serve the HTML template to index.html
 	h1 := func(w http.ResponseWriter, r *http.Request) {
@@ -31,7 +32,21 @@ func main() {
 		tmpl.Execute(w, movies)
 	}
 
-	http.HandleFunc("/", h1)
+	// handler function #2 - returns the template block with the newly added film, as an HTMX response (WIP)
+	h2 := func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(1 * time.Second)
+		title := r.PostFormValue("title")
+		director := r.PostFormValue("director")
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+		// parses the index.html file and executes the "movie-list-element" template block with the newly added movie data, which is then sent back as an HTMX response to be inserted into the existing movie list on the page.
+		tmpl := template.Must(template.ParseFiles("index.html"))
+		tmpl.ExecuteTemplate(w, "movie-list-element", Movie{Title: title, Director: director})
+	}
+
+	// define handlers
+	http.HandleFunc("/", h1)
+	http.HandleFunc("/add-movie/", h2)
+
+	log.Fatal(http.ListenAndServe(":8000", nil))
+
 }
