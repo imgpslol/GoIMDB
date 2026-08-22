@@ -1,0 +1,32 @@
+# Environment variables / secrets
+.env
+.env.*
+
+# Go build output
+/bin/
+/build/
+
+# Compiled binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test and coverage files
+*.test
+*.out
+coverage.out
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
