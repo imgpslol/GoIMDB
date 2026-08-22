@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
-
-const tmdbToken = "YOUR_TMDB_TOKEN"
 
 func testTMDB(w http.ResponseWriter, r *http.Request) {
 
@@ -27,13 +26,16 @@ func testTMDB(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Give TMDB our API token.
+	// Get the TMDB token from the environment.
+	tmdbToken := os.Getenv("TMDB_TOKEN")
+
+	// Add the token to the request.
 	req.Header.Set(
 		"Authorization",
 		"Bearer "+tmdbToken,
 	)
 
-	// Send the request.
+	// Send the request to TMDB.
 	response, err := http.DefaultClient.Do(req)
 
 	if err != nil {
