@@ -16,6 +16,7 @@ type Movie struct {
 func main() {
 	fmt.Println("Hello, World")
 
+	// Create a handler function to serve the HTML template to index.html
 	h1 := func(w http.ResponseWriter, r *http.Request) {
 		tmpl := template.Must(template.ParseFiles("index.html"))
 
