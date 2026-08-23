@@ -20,7 +20,7 @@ type Movie struct {
 func main() {
 
 	// =========================
-	// Load environment variables
+	// Load environment variables - currently using free tier of TMDB API, which requires a token.
 	// =========================
 
 	err := godotenv.Load()
